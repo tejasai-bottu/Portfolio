@@ -4019,10 +4019,7 @@ img.u-pull-left {
         height    : auto;
     }
 
-    .folio-list__item-text,
-    .folio-list__proj-link {
-        display : none;
-    }
+    
 
     .modal-popup__desc {
         padding : 0 var(--vspace-1) var(--vspace-0_25);
