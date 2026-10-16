@@ -1,0 +1,33 @@
+/* Project illustrations: small monochrome SVG scenes, one per kind of project.
+   A project picks one with  visual: 'name'  in js/data/projects.js.
+   To add one: paste an SVG (viewBox 0 0 400 300, class "viz viz--<name>") below and style it
+   in css/projects.css under "Illustrations". Projects without a visual get 'network'. */
+(function () {
+  'use strict';
+  var P = window.Portfolio = window.Portfolio || {};
+
+  var LIBRARY = {
+    guard: '<svg viewBox="0 0 400 300" class="viz viz--guard" focusable="false" aria-hidden="true"><g class="viz__rings"><circle cx="200" cy="150" r="118"/><circle cx="200" cy="150" r="88"/></g><g class="viz__threats"><circle cx="200" cy="150" r="5" style="--dx:-170px;--dy:-90px;--d:0s"/><circle cx="200" cy="150" r="5" style="--dx:170px;--dy:-70px;--d:.7s"/><circle cx="200" cy="150" r="5" style="--dx:-160px;--dy:80px;--d:1.4s"/><circle cx="200" cy="150" r="5" style="--dx:150px;--dy:100px;--d:2.1s"/><circle cx="200" cy="150" r="5" style="--dx:10px;--dy:-140px;--d:2.8s"/><circle cx="200" cy="150" r="5" style="--dx:-30px;--dy:140px;--d:3.5s"/></g><path class="viz__shield" d="M200 82 152 100v44c0 36 22 62 48 76 26-14 48-40 48-76v-44l-48-18Z"/><path class="viz__check" d="m180 150 14 14 28-30"/></svg>',
+    pqc: '<svg viewBox="0 0 400 300" class="viz viz--pqc" focusable="false" aria-hidden="true"><g class="viz__old"><circle cx="82" cy="150" r="26"/><circle cx="82" cy="150" r="9"/><path d="M108 150h78M160 150v24M178 150v16"/></g><path class="viz__flow" d="M210 150h58"/><path class="viz__head" d="m258 136 16 14-16 14"/><g class="viz__lattice"><path d="M310 100 350 122 350 172 310 196 270 172 270 122ZM310 100v46M270 122l40 24M350 122l-40 24M310 146v50M270 172l40-26M350 172l-40-26"/><circle cx="310" cy="100" r="6"/><circle cx="350" cy="122" r="6"/><circle cx="350" cy="172" r="6"/><circle cx="310" cy="196" r="6"/><circle cx="270" cy="172" r="6"/><circle cx="270" cy="122" r="6"/><circle cx="310" cy="146" r="7"/></g></svg>',
+    agent: '<svg viewBox="0 0 400 300" class="viz viz--agent" focusable="false" aria-hidden="true"><g class="viz__links"><path d="M170 150 88 70"/><path d="M170 150 70 150"/><path d="M170 150 88 230"/><path d="M170 150 215 70"/><path d="M170 150 215 230"/><path d="M170 150h110"/></g><g class="viz__pulses"><path d="M170 150 88 70" style="--d:0s"/><path d="M170 150 70 150" style="--d:.5s"/><path d="M170 150 88 230" style="--d:1s"/><path d="M170 150 215 70" style="--d:1.5s"/><path d="M170 150 215 230" style="--d:2s"/></g><g class="viz__nodes"><circle cx="88" cy="70" r="13"/><circle cx="70" cy="150" r="13"/><circle cx="88" cy="230" r="13"/><circle cx="215" cy="70" r="13"/><circle cx="215" cy="230" r="13"/></g><circle class="viz__core" cx="170" cy="150" r="26"/><g class="viz__report"><rect x="280" y="108" width="74" height="84" rx="8"/><path d="M296 132h42M296 148h42M296 164h26"/></g></svg>',
+    stego: '<svg viewBox="0 0 400 300" class="viz viz--stego" focusable="false" aria-hidden="true"><rect class="viz__doc" x="56" y="52" width="208" height="196" rx="14"/><g class="viz__words"><rect x="78" y="80" width="46" height="10" rx="5"/><rect x="134" y="80" width="64" height="10" rx="5"/><rect x="208" y="80" width="34" height="10" rx="5"/><rect x="78" y="110" width="70" height="10" rx="5"/><rect x="158" y="110" width="40" height="10" rx="5"/><rect x="208" y="110" width="34" height="10" rx="5"/><rect x="78" y="140" width="34" height="10" rx="5"/><rect x="122" y="140" width="56" height="10" rx="5"/><rect x="188" y="140" width="54" height="10" rx="5"/><rect x="78" y="170" width="58" height="10" rx="5"/><rect x="146" y="170" width="44" height="10" rx="5"/><rect x="200" y="170" width="42" height="10" rx="5"/><rect x="78" y="200" width="88" height="10" rx="5"/><rect x="176" y="200" width="36" height="10" rx="5"/></g><g class="viz__hidden"><circle cx="129" cy="85" r="2.6" style="--d:0s"/><circle cx="203" cy="85" r="2.6" style="--d:.3s"/><circle cx="153" cy="115" r="2.6" style="--d:.6s"/><circle cx="203" cy="115" r="2.6" style="--d:.9s"/><circle cx="117" cy="145" r="2.6" style="--d:1.2s"/><circle cx="183" cy="145" r="2.6" style="--d:1.5s"/><circle cx="141" cy="175" r="2.6" style="--d:1.8s"/><circle cx="195" cy="175" r="2.6" style="--d:2.1s"/><circle cx="171" cy="205" r="2.6" style="--d:2.4s"/></g><path class="viz__flow" d="M300 150h-28"/><g class="viz__file"><path d="M312 104h30l16 16v58a6 6 0 0 1-6 6h-40a6 6 0 0 1-6-6v-68a6 6 0 0 1 6-6Z M342 104v16h16"/><rect x="318" y="140" width="28" height="22" rx="4"/><path d="M324 140v-6a8 8 0 0 1 16 0v6"/></g></svg>',
+    scan: '<svg viewBox="0 0 400 300" class="viz viz--scan" focusable="false" aria-hidden="true"><rect class="viz__window" x="48" y="54" width="226" height="192" rx="14"/><path class="viz__bar" d="M48 80h226"/><g class="viz__dots"><circle cx="64" cy="67" r="3.5"/><circle cx="78" cy="67" r="3.5"/><circle cx="92" cy="67" r="3.5"/></g><g class="viz__blocks"><rect x="66" y="96" width="82" height="46" rx="8"/><rect x="66" y="152" width="190" height="30" rx="8"/><rect x="66" y="192" width="60" height="38" rx="8"/><rect x="136" y="192" width="120" height="38" rx="8"/></g><rect class="viz__flag" x="158" y="96" width="98" height="46" rx="8"/><circle class="viz__flag-dot" cx="256" cy="96" r="7"/><rect class="viz__beam" x="56" y="88" width="210" height="3" rx="1.5"/><path class="viz__flow" d="M282 150h26"/><g class="viz__report"><rect x="314" y="98" width="62" height="104" rx="8"/><path d="M326 120h38M326 136h38M326 152h24"/><path class="viz__report-check" d="m330 178 8 8 16-16"/></g></svg>',
+    network: '<svg viewBox="0 0 400 300" class="viz viz--network" focusable="false" aria-hidden="true"><g class="viz__links"><path d="M120 90 200 150 290 80M200 150 130 220M200 150 300 210M120 90 130 220M290 80 300 210"/></g><g class="viz__nodes"><circle cx="120" cy="90" r="11"/><circle cx="290" cy="80" r="11"/><circle cx="130" cy="220" r="11"/><circle cx="300" cy="210" r="11"/></g><circle class="viz__core" cx="200" cy="150" r="22"/></svg>'
+  };
+
+  // Returns a node for a project: its own image when it has one, otherwise an illustration.
+  P.visuals = {
+    names: Object.keys(LIBRARY),
+    render: function (project) {
+      if (project.image && project.image.src) {
+        var img = document.createElement('img');
+        img.src = project.image.src; img.alt = project.image.alt || '';
+        img.loading = 'lazy'; img.decoding = 'async'; img.className = 'viz-img';
+        return img;
+      }
+      var wrap = document.createElement('div');
+      wrap.innerHTML = LIBRARY[project.visual] || LIBRARY.network;
+      return wrap.firstChild;
+    }
+  };
+})();

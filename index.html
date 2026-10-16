@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Bottu Teja Sai · AI security, cryptography and security engineering</title>
+  <meta name="description" content="Portfolio of Bottu Teja Sai, an MS student in Information Technology and Management at UNC Greensboro who builds security tools for AI systems and researches LLM security, post-quantum cryptography and text steganography.">
+  <meta name="author" content="Bottu Teja Sai">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0a0a0a" id="meta-theme">
+  <link rel="canonical" href="https://tejasai-bottu.github.io/Portfolio/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bottu Teja Sai · AI security and cryptography">
+  <meta property="og:description" content="Security tools for AI systems, post-quantum migration, steganography and automated vulnerability testing. Projects, research and experience.">
+  <meta property="og:url" content="https://tejasai-bottu.github.io/Portfolio/">
+  <meta property="og:image" content="https://tejasai-bottu.github.io/Portfolio/images/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+  <!-- Before first paint: flag JavaScript and apply the saved theme (dark by default) -->
+  <script>
+    (function () {
+      var d = document.documentElement, t = 'dark';
+      d.classList.add('js');
+      try { if (localStorage.getItem('theme') === 'light') t = 'light'; } catch (e) {}
+      d.dataset.theme = t;
+    })();
+  </script>
+
+  <!-- Styles: tokens → base → page layout → projects → motion and preferences -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/projects.css">
+  <link rel="stylesheet" href="css/motion.css">
+
+  <!-- Classic scripts (no modules, no fetch) so index.html also works from a double-click.
+       `defer` keeps this order. Project content lives in js/data/projects.js. -->
+  <script src="js/vendor/scene.js" defer></script>
+  <script src="js/core.js" defer></script>
+  <script src="js/data/projects.js" defer></script>
+  <script src="js/projects/visuals.js" defer></script>
+  <script src="js/projects/filters.js" defer></script>
+  <script src="js/projects/card.js" defer></script>
+  <script src="js/projects/detail.js" defer></script>
+  <script src="js/projects/grid.js" defer></script>
+  <script src="js/ui/theme.js" defer></script>
+  <script src="js/ui/header.js" defer></script>
+  <script src="js/ui/name.js" defer></script>
+  <script src="js/ui/reveal.js" defer></script>
+  <script src="js/ui/extras.js" defer></script>
+  <script src="js/scene/bridge.js" defer></script>
+  <script src="js/main.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Bottu Teja Sai",
+    "url": "https://tejasai-bottu.github.io/Portfolio/",
+    "email": "mailto:TSBOTTU@uncg.edu",
+    "jobTitle": "Graduate student, AI security and cryptography",
+    "affiliation": { "@type": "CollegeOrUniversity", "name": "University of North Carolina Greensboro" },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Velagapudi Ramakrishna Siddhartha Engineering College" },
+    "knowsAbout": ["LLM security", "Adversarial testing", "Post-quantum cryptography", "Steganography", "Networking", "Cryptography", "Python"],
+    "sameAs": ["https://github.com/tejasai-bottu", "https://www.linkedin.com/in/tejasaibottu"]
+  }
+  </script>
+</head>
+
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span class="progress__bar" id="progress-bar"></span></div>
+
+  <!-- One continuous 3D scene behind the page. Scroll moves the camera; nothing else does. -->
+  <div class="scene" id="scene" aria-hidden="true">
+    <canvas class="scene__canvas" id="scene-canvas"></canvas>
+    <div class="scene__fallback"><div class="rings"><span></span><span></span><span></span><span></span><span></span></div></div>
+  </div>
+
+  <!-- Floating navigation: the only glass surface on the page -->
+  <header class="site-header" id="site-header">
+    <div class="site-header__bar">
+      <a class="brand" href="#top" aria-label="Bottu Teja Sai, back to top">
+        <span class="brand__mark" aria-hidden="true">bt</span>
+        <span class="brand__name">Bottu Teja Sai</span>
+      </a>
+
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#education">Education</a></li>
+          <li class="nav__cta-item"><a class="btn btn--primary btn--small" href="#contact">Say hello</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn theme-btn" id="theme-toggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+          <svg class="icon icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="icon icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path class="menu-btn__top" d="M4 9h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="menu-btn__bottom" d="M4 15h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ================================================================ HERO -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <p class="hello"><span class="hello__line" aria-hidden="true"></span>Hello, world</p>
+
+          <h1 class="hero__title" id="hero-title">
+            <span class="visually-hidden">Bottu Teja Sai</span>
+            <span class="cipher" id="cipher" aria-hidden="true" data-fx="name">Bottu Teja Sai</span>
+          </h1>
+
+          <p class="hero__role" data-fx="label">Cybersecurity learner, innovative thinker, and builder of security tools for AI systems.</p>
+
+          <p class="hero__lead">I'm a Master's student in Information Technology and Management at UNC Greensboro. I research how language models fail under attack and turn that research into software: LLM defense, post-quantum cryptography migration, steganography and automated vulnerability testing.</p>
+
+          <p class="status"><span class="status__dot" aria-hidden="true"></span>Open to security research and engineering roles</p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#projects">
+              View projects
+              <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn btn--secondary" href="assets/resume.pdf" target="_blank" rel="noopener">
+              <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z M14 3v5h5 M9 13h6M9 17h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Résumé (PDF)<span class="visually-hidden">, opens in a new tab</span>
+            </a>
+          </div>
+
+          <ul class="hero__social" aria-label="Find me online">
+            <li><a href="https://www.linkedin.com/in/tejasaibottu" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+            <li><a href="https://github.com/tejasai-bottu" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+            <li><a href="mailto:TSBOTTU@uncg.edu">Email</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#about">
+        <span>Scroll to explore</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </section>
+
+    <!-- ================================================================ JOURNEY STRIP -->
+    <section class="journey" aria-label="My journey in words">
+      <div class="journey__track" id="journey-track">
+        <ul class="journey__list">
+          <li>Ambitious</li><li>Tech-enthusiast</li><li>Skilled</li><li>Curious</li><li>Evolving</li><li>Opportunity-grabber</li><li>Good planner</li><li>Attentive listener</li><li>Team lead</li>
+        </ul>
+        <ul class="journey__list" aria-hidden="true">
+          <li>Ambitious</li><li>Tech-enthusiast</li><li>Skilled</li><li>Curious</li><li>Evolving</li><li>Opportunity-grabber</li><li>Good planner</li><li>Attentive listener</li><li>Team lead</li>
+        </ul>
+      </div>
+      <button class="journey__toggle icon-btn" id="journey-toggle" type="button" aria-pressed="false" aria-label="Pause the moving words">
+        <svg class="icon icon--sm icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="icon icon--sm icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6v12l10-6Z" fill="currentColor"/></svg>
+      </button>
+    </section>
+
+    <!-- ================================================================ ABOUT -->
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about__intro">
+          <div class="about__portrait reveal">
+            <div class="portrait tilt" data-tilt>
+              <img src="images/profile-960.webp" srcset="images/profile-480.webp 480w, images/profile-960.webp 960w" sizes="(max-width: 860px) 80vw, 420px" width="960" height="1163" alt="Portrait of Bottu Teja Sai smiling, wearing a white shirt" loading="lazy" decoding="async">
+              <div class="rings rings--portrait" aria-hidden="true"><span></span><span></span><span></span></div>
+            </div>
+            <p class="portrait__caption">
+              <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z M12 12.2a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+              Greensboro, North Carolina, USA
+            </p>
+          </div>
+
+          <div class="about__story">
+            <p class="eyebrow reveal"><span aria-hidden="true">#</span>about</p>
+            <h2 class="section__title reveal" id="about-title">I like thinking differently about security.</h2>
+            <p class="prose prose--lead reveal">I'm a motivated, curious person with a strong passion for cybersecurity. I enjoy diving deep into complex concepts, then turning them into tools that solve real-world problems creatively.</p>
+            <p class="prose reveal">I'm a graduate student at the University of North Carolina Greensboro, studying Information Technology and Management after a B.Tech in Information Technology at Velagapudi Ramakrishna Siddhartha Engineering College. My projects apply that foundation to three connected problems: securing AI systems, moving organizations to post-quantum cryptography, and automating security testing.</p>
+            <p class="prose reveal">Before graduate school I worked remotely as a cybersecurity developer at The Offensive Labs, building a dashboard, a backend and microservices for AI agents.</p>
+
+            <div class="spec reveal" aria-labelledby="spec-title">
+              <p class="spec__head" id="spec-title"><span class="spec__prompt" aria-hidden="true">$</span> whoami</p>
+              <dl class="spec__list">
+                <div><dt>Focus</dt><dd>AI security, applied cryptography</dd></div>
+                <div><dt>Studying</dt><dd>MS, Information Technology and Management, UNC Greensboro</dd></div>
+                <div><dt>Published</dt><dd>3 conference papers, 2025 to 2026</dd></div>
+                <div><dt>Built</dt><dd>5 security tools, 2 as team lead</dd></div>
+                <div><dt>Led</dt><dd>50+ volunteers as NSS Assistant Director</dd></div>
+                <div><dt>Status</dt><dd class="spec__ok">Open to research and engineering roles</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <!-- How I work: from the "Interests" section of the earlier CV -->
+        <div class="traits">
+          <h3 class="subhead reveal">How I work</h3>
+          <ul class="traits__grid">
+            <li class="trait reveal">
+              <svg class="trait__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M4 12h16M4 18h7M17 4l3 2-3 2M14 16l3 2-3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <h4>Plan before I build</h4>
+              <p>Known as a good planner, I map the work first so collaboration and execution stay smooth.</p>
+            </li>
+            <li class="trait reveal">
+              <svg class="trait__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10a5 5 0 1 1 10 0c0 3-3 3.5-3 6.5a2.5 2.5 0 0 1-5 0M10 10a2 2 0 1 1 4 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <h4>Listen first</h4>
+              <p>An attentive listener. I understand the problem and the people before proposing a fix.</p>
+            </li>
+            <li class="trait reveal">
+              <svg class="trait__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2.5 20a6.5 6.5 0 0 1 13 0M16 4.3a3.5 3.5 0 0 1 0 6.4M18.5 14a6.5 6.5 0 0 1 3 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <h4>Lead or support</h4>
+              <p>I take initiative in academic and cultural activities, always ready to lead or to support.</p>
+            </li>
+            <li class="trait reveal">
+              <svg class="trait__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <h4>Team or solo</h4>
+              <p>I thrive in team environments and in independent roles, with clear communication and adaptability.</p>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================ PROJECTS
+         Cards and the detail view are built from js/data/projects.js. -->
+    <section class="section section--alt projects" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <header class="section__head projects__head">
+          <p class="eyebrow reveal"><span aria-hidden="true">#</span>projects</p>
+          <h2 class="section__title reveal" id="projects-title">Projects</h2>
+          <p class="section__lede reveal">Security tools I have designed and built. Filter by area, then open any project for the full story.</p>
+        </header>
+
+        <div class="projects__toolbar reveal">
+          <div class="filters" id="project-filters" role="group" aria-label="Filter projects by area"></div>
+          <p class="filters__desc" id="project-filter-desc" aria-live="polite"></p>
+        </div>
+
+        <ul class="pgrid" id="project-grid" aria-label="Projects"></ul>
+        <noscript>
+          <p class="projects__noscript">The project cards need JavaScript. Every project is also summarized in my <a class="link" href="assets/resume.pdf">résumé (PDF)</a> and on <a class="link" href="https://github.com/tejasai-bottu">GitHub</a>.</p>
+        </noscript>
+      </div>
+
+      <!-- Floating project details (filled by js/projects/detail.js) -->
+      <dialog class="detail" id="project-detail" aria-labelledby="detail-title">
+        <div class="detail__panel">
+          <header class="detail__bar">
+            <p class="detail__kicker" id="detail-kicker">Project</p>
+            <button class="icon-btn detail__close" type="button" aria-label="Close project details">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+          </header>
+          <div class="detail__scroll" id="detail-content"></div>
+          <footer class="detail__nav">
+            <button class="detail__step" id="detail-prev" type="button"><span class="detail__step-label">Previous</span><span class="detail__step-name" id="detail-prev-name"></span></button>
+            <button class="detail__step detail__step--next" id="detail-next" type="button"><span class="detail__step-label">Next</span><span class="detail__step-name" id="detail-next-name"></span></button>
+          </footer>
+        </div>
+      </dialog>
+    </section>
+
+    <!-- ================================================================ RESEARCH -->
+    <section class="section" id="research" aria-labelledby="research-title">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow reveal"><span aria-hidden="true">#</span>research</p>
+          <h2 class="section__title reveal" id="research-title">Research and publications</h2>
+          <p class="section__lede reveal">Three conference papers on LLM security and text steganography.</p>
+        </header>
+
+        <ol class="papers">
+          <li class="paper reveal" id="paper-kalingaconf">
+            <p class="paper__year">2026</p>
+            <div class="paper__body">
+              <p class="paper__venue"><abbr title="Kalinga Conference on Communication and Computing">KalingaConf</abbr>, Kalinga Conference on Communication and Computing</p>
+              <h3 class="paper__title">Adversarial Security Assessment of Large Language Models Through Automated Vulnerability Testing</h3>
+              <ul class="tags" aria-label="Topics"><li>LLM security</li><li>Adversarial evaluation</li><li>Automated testing</li></ul>
+              <a class="link" href="#project-ai-guardian">See the related project, AI-GUARDIAN</a>
+            </div>
+          </li>
+          <li class="paper reveal" id="paper-icccct">
+            <p class="paper__year">2026</p>
+            <div class="paper__body">
+              <p class="paper__venue"><abbr title="International Conference on Computing and Communication Technologies">ICCCT</abbr>, International Conference on Computing and Communication Technologies</p>
+              <h3 class="paper__title">Dynamic Pattern-Based Text Steganography System</h3>
+              <p class="paper__note">Hides encrypted files of any format inside ordinary text. A user-defined code generates invisible Unicode patterns, so the file can be sent without looking like a file.</p>
+              <ul class="tags" aria-label="Technologies"><li>AES-256-CBC</li><li>PBKDF2</li><li>SHA-256</li><li>Zero-width Unicode</li></ul>
+              <div class="paper__links">
+                <a class="link" href="#project-steganography">See the project</a>
+                <a class="link" href="https://github.com/tejasai-bottu/Dynamic-Pattern-Based-Text-Steganography-with-Advance-Encryption" target="_blank" rel="noopener">Source code on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="paper reveal" id="paper-icdect">
+            <p class="paper__year">2025</p>
+            <div class="paper__body">
+              <p class="paper__venue"><abbr title="International Conference on Data Engineering and Communication Technology">ICDECT</abbr>, International Conference on Data Engineering and Communication Technology</p>
+              <h3 class="paper__title">Autonomous LLM-Driven Security Agent</h3>
+              <p class="paper__note">An agent that combines security tools with a local LLM to test web applications and write structured reports.</p>
+              <a class="link" href="#project-security-agent">See the project</a>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================================================================ EXPERIENCE -->
+    <section class="section section--alt" id="experience" aria-labelledby="experience-title">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow reveal"><span aria-hidden="true">#</span>experience</p>
+          <h2 class="section__title reveal" id="experience-title">Experience and leadership</h2>
+        </header>
+
+             <article class="role reveal">
+          <div class="role__meta">
+               <p class="role__dates">Aug 2025 to Feb 2026</p>
+               <p class="role__place">Remote</p>
+               <span class="badge">Employment</span>
+          </div>
+          <div class="role__body">
+               <h3 class="role__title">Cybersecurity Developer</h3>
+               <p class="role__org">The Offensive Labs</p>
+               <ul class="bullets">
+                    <li>Developed a UI/UX dashboard from scratch, translating design concepts into fully functional interfaces.</li>
+                    <li>Architected backend server and database systems with a focus on scalability and maintainability.</li>
+                    <li>Engineered modular microservices for discrete AI agents, improving backend task-handling efficiency.</li>
+               </ul>
+          </div>
+     </article>
+
+     <div style="margin-bottom: 2rem;"></div>
+
+     <article class="role reveal">
+          <div class="role__meta">
+               <p class="role__dates">Sep 2026 to Present</p>
+               <p class="role__place">On-site</p>
+               <span class="badge">Employment</span>
+          </div>
+          <div class="role__body">
+               <h3 class="role__title">IT Support Technician</h3>
+               <p class="role__org">UNCG 6-TECH Service Center</p>
+               <ul class="bullets">
+                    <li>Respond to IT support tickets, troubleshoot technical issues, and resolve user-reported problems.</li>
+                    <li>Assist users with internet connectivity, network access, and other technical service requests.</li>
+                    <li>Communicate directly with users to understand issues, provide guidance, and ensure effective resolution.</li>
+               </ul>
+          </div>
+     </article>
+
+        <h3 class="subhead subhead--spaced reveal">Activities and leadership</h3>
+        <ul class="lead-grid">
+          <li class="lead reveal">
+            <p class="lead__role">Assistant Director</p>
+            <h4>National Service Scheme (NSS)</h4>
+            <p>Led 50+ volunteers, coordinated campus initiatives and organized community outreach programs.</p>
+          </li>
+          <li class="lead reveal">
+            <p class="lead__role">Team lead, two projects</p>
+            <h4>B.Tech engineering teams</h4>
+            <p>Led the <a href="#project-steganography">steganography system</a> and the <a href="#project-nocode-testing">no-code security testing system</a> from planning and architecture to the final presentation.</p>
+          </li>
+          <li class="lead reveal">
+            <p class="lead__role">Active member</p>
+            <h4>Association for Computing Machinery (ACM)</h4>
+            <p>Contributed to technical workshops and security events.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================================================================ SKILLS -->
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow reveal"><span aria-hidden="true">#</span>skills</p>
+          <h2 class="section__title reveal" id="skills-title">The toolkit behind the work</h2>
+          <p class="section__lede reveal">Languages, tools and topics I have used in my projects, research and coursework.</p>
+        </header>
+
+        <div class="bento">
+          <section class="cell cell--core reveal" aria-labelledby="sk-core">
+            <div class="rings rings--cell" aria-hidden="true"><span></span><span></span><span></span></div>
+            <h3 id="sk-core">Strongest in</h3>
+            <p class="cell__big">Networking <span aria-hidden="true">&amp;</span><span class="visually-hidden">and</span> Cryptography</p>
+          </section>
+          <section class="cell cell--wide reveal" aria-labelledby="sk-ai">
+            <h3 id="sk-ai"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6.5 6.5l2 2M15.5 15.5l2 2M6.5 17.5l2-2M15.5 8.5l2-2M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Generative AI</h3>
+            <ul class="tags"><li>LLM integration</li><li>Adversarial evaluation</li><li>RAG</li><li>Fine-tuning (basics)</li><li>Local LLMs with Ollama</li><li>Gemma 3</li></ul>
+          </section>
+          <section class="cell cell--wide reveal" aria-labelledby="sk-sec">
+            <h3 id="sk-sec"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.4 3 8.1 7 9.5 4-1.4 7-5.1 7-9.5V6l-7-3Z M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Security testing</h3>
+            <ul class="tags"><li>Burp Suite</li><li>Metasploit</li><li>OWASP ZAP</li><li>Nikto</li><li>SQLmap</li><li>OpenVAS</li><li>John the Ripper</li></ul>
+          </section>
+          <section class="cell reveal" aria-labelledby="sk-net">
+            <h3 id="sk-net"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4h14v4M12 10v5M10 3h4v4h-4zM3 19h4v2H3zM10 19h4v2h-4zM17 19h4v2h-4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Network analysis</h3>
+            <ul class="tags"><li>Nmap</li><li>Wireshark</li></ul>
+          </section>
+          <section class="cell reveal" aria-labelledby="sk-lang">
+            <h3 id="sk-lang"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 6-5-6-5M12 19h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Programming</h3>
+            <ul class="tags"><li>Python</li><li>C</li><li>Bash</li></ul>
+          </section>
+          <section class="cell cell--wide reveal" aria-labelledby="sk-crypto">
+            <h3 id="sk-crypto"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 0 1 7 0V11M12 15v2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Cryptography</h3>
+            <ul class="tags"><li>AES-256-CBC</li><li>PBKDF2</li><li>SHA-256</li><li>pycryptodome</li><li>Post-quantum migration</li><li>Steganography</li></ul>
+          </section>
+          <section class="cell reveal" aria-labelledby="sk-eng">
+            <h3 id="sk-eng"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v4H4zM4 13h16v4H4zM7 9h.01M7 15h.01" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Engineering</h3>
+            <ul class="tags"><li>Docker</li><li>Git</li><li>GitHub</li><li>Microservices</li><li>Dashboards</li></ul>
+          </section>
+          <section class="cell reveal" aria-labelledby="sk-os">
+            <h3 id="sk-os"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v11H3zM8 20h8M12 16v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Platforms</h3>
+            <ul class="tags"><li>Linux</li><li>Kali Linux</li><li>Windows</li><li>Microsoft 365</li><li>Android Studio</li></ul>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ EDUCATION -->
+    <section class="section section--alt" id="education" aria-labelledby="education-title">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow reveal"><span aria-hidden="true">#</span>education</p>
+          <h2 class="section__title reveal" id="education-title">Education and certifications</h2>
+        </header>
+
+        <div class="edu">
+          <ol class="timeline">
+            <li class="timeline__item reveal">
+              <p class="timeline__dates">2026 to present</p>
+              <div class="timeline__card">
+                <h3 class="timeline__title">University of North Carolina Greensboro</h3>
+                <p class="timeline__sub">Master of Science in Information Technology and Management</p>
+                <p class="timeline__place">Greensboro, North Carolina, USA</p>
+              </div>
+            </li>
+            <li class="timeline__item reveal">
+              <p class="timeline__dates">2022 to 2026</p>
+              <div class="timeline__card">
+                <h3 class="timeline__title">Velagapudi Ramakrishna Siddhartha Engineering College</h3>
+                <p class="timeline__sub">Bachelor of Technology in Information Technology</p>
+                <p class="timeline__place">Vijayawada, India · CGPA 7.11 / 10</p>
+                <p class="timeline__desc">Foundational and advanced coursework in software development, networking and web technologies.</p>
+              </div>
+            </li>
+            <li class="timeline__item reveal">
+              <p class="timeline__dates">2020 to 2021</p>
+              <div class="timeline__card">
+                <h3 class="timeline__title">Narayana Junior College</h3>
+                <p class="timeline__sub">Intermediate, Mathematics, Physics and Chemistry (MPC)</p>
+                <p class="timeline__desc">A strong academic foundation for engineering studies.</p>
+              </div>
+            </li>
+            <li class="timeline__item reveal">
+              <p class="timeline__dates">2019</p>
+              <div class="timeline__card">
+                <h3 class="timeline__title">Narayana School</h3>
+                <p class="timeline__sub">Secondary School Certificate (SSC), 10th grade</p>
+                <p class="timeline__desc">Core competencies in science and mathematics.</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="certs">
+            <h3 class="subhead reveal">Certifications</h3>
+            <ul class="cert-grid">
+              <li class="cert reveal">
+                <p class="cert__issuer">Simplilearn <span class="cert__date">Mar 2025</span></p>
+                <h4>Introduction to Kali Linux Basics</h4>
+                <p>Ethical hacking, penetration testing and Kali Linux tools.</p>
+              </li>
+              <li class="cert reveal">
+                <p class="cert__issuer">Udemy <span class="cert__date">Dec 2024</span></p>
+                <h4>Linux Beginner Commands</h4>
+                <p>Hands-on practice with essential Linux commands and the command line.</p>
+              </li>
+              <li class="cert reveal">
+                <p class="cert__issuer">Cisco Networking Academy <span class="cert__date">Oct 2024</span></p>
+                <h4>CCNA: Introduction to Networks</h4>
+                <p>Networking concepts, IP addressing, subnetting and network protocols.</p>
+              </li>
+              <li class="cert reveal">
+                <p class="cert__issuer">NPTEL <span class="cert__date">May 2024</span></p>
+                <h4>The Joy of Computing using Python</h4>
+                <p>Python programming, problem-solving and computational thinking.</p>
+              </li>
+              <li class="cert reveal">
+                <p class="cert__issuer">Google</p>
+                <h4>The Bits and Bytes of Computer Networking</h4>
+              </li>
+              <li class="cert reveal">
+                <p class="cert__issuer">IBM</p>
+                <h4>Getting Started with Git and GitHub</h4>
+              </li>
+              <li class="cert reveal">
+                <p class="cert__issuer">NPTEL</p>
+                <h4>Social Networking</h4>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ CONTACT -->
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact__inner">
+        <p class="eyebrow reveal"><span aria-hidden="true">#</span>contact</p>
+        <h2 class="contact__title reveal" id="contact-title"><span class="visually-hidden">Say hello.</span><span class="cipher" aria-hidden="true" data-cipher>Say hello.</span></h2>
+        <p class="contact__lede reveal">If you enjoy my work, or you're hiring for security research or engineering, I'd love to connect. Email is the fastest way to reach me.</p>
+
+        <div class="contact__actions reveal">
+          <a class="btn btn--primary btn--large" href="mailto:TSBOTTU@uncg.edu">
+            <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3z M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            Email me
+          </a>
+          <button class="btn btn--secondary btn--large" id="copy-email" type="button" data-email="TSBOTTU@uncg.edu">Copy email address</button>
+        </div>
+        <p class="visually-hidden" id="copy-status" role="status" aria-live="polite"></p>
+
+        <ul class="channels reveal">
+          <li>
+            <span class="channels__label">University email</span>
+            <a href="mailto:TSBOTTU@uncg.edu">TSBOTTU@uncg.edu</a>
+          </li>
+          <li>
+            <span class="channels__label">Personal email</span>
+            <a href="mailto:bottutejasai@gmail.com">bottutejasai@gmail.com</a>
+          </li>
+          <li>
+            <span class="channels__label">Phone</span>
+            <a href="tel:+19843761118">+1 (984) 376-1118</a>
+          </li>
+          <li>
+            <span class="channels__label">LinkedIn</span>
+            <a href="https://www.linkedin.com/in/tejasaibottu" target="_blank" rel="noopener">in/tejasaibottu<span class="visually-hidden"> (opens in a new tab)</span></a>
+          </li>
+          <li>
+            <span class="channels__label">GitHub</span>
+            <a href="https://github.com/tejasai-bottu" target="_blank" rel="noopener">tejasai-bottu<span class="visually-hidden"> (opens in a new tab)</span></a>
+          </li>
+          <li>
+            <span class="channels__label">Résumé</span>
+            <a href="assets/resume.pdf" target="_blank" rel="noopener">Download PDF<span class="visually-hidden"> (opens in a new tab)</span></a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 Bottu Teja Sai. Built with plain HTML, CSS and JavaScript.</p>
+      <ul class="site-footer__links">
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#top">Back to top</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

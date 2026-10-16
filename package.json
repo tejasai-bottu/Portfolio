@@ -1,0 +1,12 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "description": "Optional: only needed to rebuild js/vendor/scene.js from src/scene/. The site itself has no build step.",
+  "scripts": {
+    "build": "esbuild src/scene/index.js --bundle --minify --format=iife --global-name=PortfolioScene --target=es2018 --legal-comments=none --outfile=js/vendor/scene.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "three": "0.186.1"
+  }
+}
