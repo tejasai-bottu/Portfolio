@@ -1,0 +1,199 @@
+/* ==========================================================================
+   Phone refinements. Loaded after projects.css and before motion.css.
+
+   Desktop and tablet keep their own rules. Everything below sits inside max-width
+   queries, so a laptop (1024px+) renders exactly as before. This file only rearranges
+   and resizes what already exists on smaller screens; it adds no new content and
+   removes none.
+
+   Behavior on phones (320–767px):
+   - One column, 20px side margins, 64px between sections, 32px from a section head to its content.
+   - Same fonts, colors, components and section order; headings and pills one step smaller.
+   - Rows that used to wrap unpredictably get a fixed structure: terminal lines hang under
+     their text, filters sit on one swipeable row, card footers keep "Details" on the right,
+     role meta reads date first, then place and type.
+   - Every tap target is at least 44px tall.
+   ========================================================================== */
+
+/* Notched phones in landscape: keep content clear of the notch (no effect on tablets/desktops). */
+@media (max-width: 1023px) {
+  .container,
+  .site-header {
+    padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  }
+}
+
+/* Single-column screens (tablet portrait and phones): the About section reads
+   heading first, then the portrait, then the story. The desktop two-column grid is untouched. */
+@media (max-width: 900px) {
+  .about__intro { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .about__story { display: contents; }
+  .about__story > .eyebrow { order: -2; align-self: flex-start; }
+  .about__story > .section__title { order: -1; }
+  .about__portrait { order: 0; margin: var(--s6) 0 var(--s2); }
+  .about__story > :not(.eyebrow):not(.section__title) { order: 1; }
+}
+
+/* Phones ------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  :root {
+    --gutter: 1.25rem;
+    --section-y: 4rem;
+    --fs-h2: clamp(1.75rem, 1.4rem + 1.5vw, 2.125rem);
+    --fs-body: 1rem;
+    --fs-lede: 1.0625rem;
+  }
+
+  /* Section rhythm */
+  .section__head { margin-bottom: var(--s6); }
+  .section__lede { margin-top: var(--s4); font-size: 1rem; }
+  .eyebrow { margin-bottom: var(--s3); }
+  .subhead { font-size: 1.3125rem; }
+  .subhead--spaced { margin: var(--s7) 0 var(--s4); }
+  .tags { gap: 6px; }
+  .tags li { padding: 0.22rem 0.65rem; font-size: 0.8125rem; }
+  .bullets { gap: var(--s2); }
+  .bullets li { font-size: 0.9375rem; line-height: 1.55; }
+
+  /* Header */
+  .site-header__bar { padding: 0 var(--s1) 0 var(--s3); }
+  .brand { gap: 10px; }
+  .brand__mark { width: 34px; height: 34px; }
+  .brand__name { font-size: 0.9375rem; }
+
+  /* Hero: name, one console panel (terminal + status), two actions, links */
+  .hero { padding-block: calc(var(--header-h) + var(--header-top) + 2rem) 3rem; }
+  .hello { margin-bottom: var(--s4); }
+  .hero__terminal {
+    margin-top: var(--s5);
+    padding: var(--s3) var(--s4);
+    font-size: 0.75rem; line-height: 1.65;
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    border: 1px solid var(--line); border-bottom: 0;
+    border-radius: var(--r-md) var(--r-md) 0 0;
+  }
+  /* "teja@:~$ " is 9 monospaced characters: wrapped lines hang under the text, not the prompt */
+  .hero__terminal p { padding-left: 9ch; text-indent: -9ch; }
+  .hero__terminal p + p { margin-top: 3px; }
+  .status {
+    display: flex; width: 100%; margin-top: 0;
+    padding: 0.7rem var(--s4);
+    border: 1px solid var(--line); border-top-style: dashed;
+    border-radius: 0 0 var(--r-md) var(--r-md);
+    font-size: 0.875rem; line-height: 1.4; text-wrap: balance;
+  }
+  .hero__actions { margin-top: var(--s5); }
+  .hero__social { margin-top: var(--s2); }
+
+  /* About */
+  .about__portrait { max-width: none; }
+  .portrait { border-radius: var(--r-md); }
+  .portrait img { aspect-ratio: 1 / 1; object-position: 50% 16%; }
+  .rings--portrait { width: 62%; }
+  .portrait__caption { margin-top: var(--s3); }
+  .spec { margin-top: var(--s6); }
+  .spec__head { padding: var(--s3) var(--s4); }
+  .spec__list { padding: var(--s1) var(--s4); }
+  .spec__list div { grid-template-columns: 5.25rem minmax(0, 1fr); gap: var(--s3); padding-block: 0.65rem; }
+  .spec__list dd { font-size: 0.875rem; line-height: 1.5; }
+
+  /* How I work: icon beside the text instead of above it */
+  .traits { margin-top: var(--s7); }
+  .traits .subhead { margin-bottom: var(--s4); }
+  .traits__grid { gap: var(--s3); }
+  .trait { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: var(--s4); align-items: start; padding: var(--s4); }
+  .trait__icon { grid-row: span 2; width: 40px; height: 40px; padding: 9px; margin: 0; }
+  .trait h4 { margin: 0.45rem 0 var(--s1); font-size: 1rem; }
+  .trait p { font-size: 0.875rem; }
+
+  /* Projects: one swipeable filter row, then single-column cards */
+  .projects__head { margin-bottom: var(--s5); }
+  .projects__toolbar { gap: var(--s2); margin-bottom: var(--s5); }
+  .filters {
+    position: relative; /* contains the buttons' screen-reader labels inside the scroller */
+    flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter); scrollbar-width: none;
+    margin: -6px calc(var(--gutter) * -1); padding: 6px var(--gutter);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .filter { flex: none; min-height: 44px; scroll-snap-align: start; }
+  .filters__desc { font-size: 0.875rem; }
+  .pgrid { gap: var(--s4); }
+  .pcard { border-radius: var(--r-md); }
+  .pcard__body { gap: var(--s2); padding: var(--s4) var(--s5) var(--s5); }
+  .pcard__title { font-size: 1.125rem; }
+  .pcard__foot { flex-wrap: nowrap; align-items: flex-end; margin-top: auto; padding-top: var(--s3); }
+  .pcard__foot .ptags { flex: 1 1 auto; min-width: 0; }
+  .ptag { white-space: nowrap; }
+  .pcard__more { flex: none; padding-bottom: 3px; }
+
+  /* Research: year as a small label; links are full tap targets */
+  .paper { gap: var(--s3); padding-block: var(--s6); }
+  .paper__year {
+    justify-self: start; padding: 0.15rem 0.6rem; border: 1px solid var(--line-strong); border-radius: var(--r-pill);
+    font-size: 0.75rem; font-weight: 600; line-height: 1.45; color: var(--text-2);
+  }
+  .paper__body { gap: var(--s3); }
+  .paper__title { font-size: 1.1875rem; }
+  .paper__note { font-size: 0.9375rem; }
+  .paper__links { gap: 0 var(--s5); }
+  .paper .link { display: inline-flex; align-items: center; min-height: 44px; padding-block: 0; }
+
+  /* Experience: dates on their own line, then place and type */
+  .role { gap: var(--s3); padding: var(--s5); border-radius: var(--r-md); }
+  .role__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); }
+  .role__dates { flex: 1 0 100%; font-size: var(--fs-mono); }
+  .role__place { font-size: 0.875rem; }
+  .role__title { font-size: 1.25rem; }
+  .role__org { margin: 2px 0 var(--s4); font-size: 0.9375rem; }
+  .role-gap { margin-bottom: var(--s4); }
+  .lead-grid { gap: var(--s3); }
+  .lead { padding: var(--s4) var(--s5); }
+  .lead h4 { font-size: 1rem; }
+  .lead p:last-child { font-size: 0.875rem; }
+
+  /* Skills */
+  .bento { gap: var(--s3); }
+  .cell { padding: var(--s4) var(--s5) var(--s5); }
+  .cell h3 { margin-bottom: var(--s3); }
+  .cell .tags li { padding: 0.28rem 0.7rem; font-size: 0.8125rem; }
+  .cell--core { min-height: 150px; }
+  .cell__big { font-size: clamp(1.625rem, 1.2rem + 2vw, 2rem); }
+  .rings--cell { width: 260px; right: -90px; top: -90px; }
+
+  /* Education and certifications */
+  .edu { gap: var(--s7); }
+  .timeline { gap: var(--s4); padding-left: 1.75rem; }
+  .timeline__item::before { left: calc(-1.75rem + 1px); }
+  .timeline__card { padding: var(--s4) 1.125rem; }
+  .timeline__title { font-size: 1.0625rem; }
+  .timeline__sub { font-size: 0.9375rem; line-height: 1.5; }
+  .timeline__place { font-size: 0.8125rem; }
+  .timeline__desc { font-size: 0.875rem; margin-top: var(--s2); }
+  .certs .subhead { margin-bottom: var(--s4); }
+  .cert-grid { gap: var(--s3); }
+  .cert { gap: 6px; padding: var(--s4) 1.125rem; }
+  .cert h4 { font-size: 0.9375rem; }
+  .cert p:last-child:not(.cert__issuer) { font-size: 0.8125rem; }
+
+  /* Contact */
+  .contact__lede { margin-top: var(--s4); font-size: 1rem; }
+  .contact__actions { margin-top: var(--s6); }
+  .channels { margin-top: var(--s7); border-radius: var(--r-md); }
+  .channels li { gap: 0; padding: var(--s3) var(--s4) var(--s1); }
+  .channels a { padding-block: 9px; } /* 44px tap height */
+
+  /* Footer */
+  .site-footer__inner { flex-direction: column; align-items: flex-start; gap: var(--s2); }
+  .site-footer__links { gap: 0 var(--s5); }
+  .site-footer__links a { display: inline-flex; align-items: center; min-height: 44px; padding-block: 0; }
+}
+
+/* The smallest phones (iPhone SE 1st gen, small Androids) */
+@media (max-width: 359px) {
+  :root { --gutter: 1rem; }
+  .spec__list div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}

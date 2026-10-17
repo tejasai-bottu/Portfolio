@@ -26,10 +26,13 @@
   -webkit-backdrop-filter: saturate(180%) blur(22px); backdrop-filter: saturate(180%) blur(22px);
 }
 .brand { display: inline-flex; align-items: center; gap: var(--s3); color: var(--text); font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; min-height: 44px; }
+/* The TS mark: one inline vector drawn in currentColor, so it is white on the dark theme
+   and black on the light theme with no image swap. */
 .brand__mark {
-  display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 10px;
-  background: var(--text); color: var(--bg); font-family: var(--mono); font-weight: 800; font-size: 0.875rem; letter-spacing: -0.04em;
+  display: block; flex: none; width: 36px; height: 36px; color: var(--text);
+  transition: transform var(--t-base) var(--ease);
 }
+.brand:hover .brand__mark { transform: rotate(-6deg); }
 .nav__list { display: flex; align-items: center; gap: 2px; }
 .nav__list a:not(.btn) {
   position: relative; display: inline-flex; align-items: center; min-height: 40px; padding: 0 0.8rem; border-radius: var(--r-pill);
@@ -213,6 +216,7 @@ html:not(.js) .journey__toggle { display: none; }
 
 /* Experience ------------------------------------------------------------ */
 .role { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: var(--s6); padding: clamp(1.5rem, 3vw, 2.5rem); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); }
+.role-gap { margin-bottom: 2rem; } /* space between two role cards */
 .role__meta { display: grid; align-content: start; justify-items: start; gap: var(--s2); }
 .role__dates { font-family: var(--mono); font-size: var(--fs-small); font-weight: 600; }
 .role__place { color: var(--text-3); font-size: var(--fs-small); }

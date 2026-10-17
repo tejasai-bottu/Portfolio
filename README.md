@@ -29,6 +29,8 @@ The old "02 AI Security", "Cryptography", "The Architecture of My Thinking" and 
 | Filter buttons | `js/projects/filters.js` and `css/projects.css` (`.filter`) |
 | All other content (About, Research, Experience…) | `index.html` |
 | Colors, fonts, spacing | `css/tokens.css` |
+| Phone layout (spacing, sizes, stacking) | `css/mobile.css` (desktop rules stay in the other files) |
+| The TS logo | the `.brand__mark` SVG in `index.html`; tab icons are `images/favicon.svg`, `images/favicon.ico`, `images/apple-touch-icon.png` |
 | The 3D scene | `src/scene/` (see below) |
 
 ### Add a project
@@ -50,6 +52,7 @@ css/
   base.css                 Reset and shared components (buttons, links, tags, badges)
   layout.css               Header, hero, sections, footer, responsive rules
   projects.css             Filters, project grid, cards, floating detail view, illustrations
+  mobile.css               Phone refinements (≤767px) and the single-column About order (≤900px)
   motion.css               Reveal animations; reduced motion, transparency and contrast
 js/
   core.js                  Shared helpers (window.Portfolio)
